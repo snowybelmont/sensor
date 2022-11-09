@@ -1,0 +1,62 @@
+int botao = 2;
+int estadoBotao = 0;
+int sensor = 0;
+
+void setup() {
+  pinMode(10, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(botao, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  estadoBotao = digitalRead(botao);
+  sensor = -40 + 0.488155 * (analogRead(A0)-20);
+  
+  if (estadoBotao == HIGH) {
+    if (sensor <= 20) {
+      digitalWrite(10, HIGH);
+      digitalWrite(12, LOW);
+      Serial.println("Sfrio né?");
+      delay(1000); 
+    } 
+    
+    else {
+      digitalWrite(10, LOW);
+      digitalWrite(12, LOW);
+      delay(1000);
+    }
+    
+    if (sensor > 20 && sensor < 50) {
+      digitalWrite(10, LOW);
+      digitalWrite(12, HIGH);
+      Serial.println("Hm To Quentinho");
+      delay(1000);
+    } 
+    
+    else {
+      digitalWrite(10, LOW);
+      digitalWrite(12, LOW);
+      delay(1000);
+    }
+    
+    if (sensor > 50) {
+      digitalWrite(10, LOW);
+      digitalWrite(12, HIGH);
+      Serial.println("Eu acho q vc ta em combustão, meno");
+      delay(1000);
+    }
+    
+    else {
+      digitalWrite(10, LOW);
+      digitalWrite(12, LOW);
+      delay(1000);
+    }
+  } 
+  
+  else {
+    digitalWrite(10, LOW);
+    digitalWrite(12, LOW);
+    delay(1000);
+  }
+}
